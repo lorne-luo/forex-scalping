@@ -73,15 +73,15 @@ def tick_to_candle(symbol, src, timeframe):
 
     with open(src) as src_file:
         reader = csv.reader(src_file)
-        for symbol, time, bid, ask in reader:
+        for _, time, bid, ask in reader:
             time = datetime.strptime(time, '%Y%m%d %H:%M:%S.%f')
             bid = Decimal(bid)
             ask = Decimal(ask)
             process_tick(time, bid, ask, timeframe)
 
-    dest = '%s_%s.csv' % (symbol, PERIOD_M5),
+    dest = '%s_%s.csv' % (symbol, PERIOD_M5)
     write_to_csv(dest)
-    print('Outpu: %s' % dest)
+    print('Output: %s' % dest)
 
 
 # GBP/USD,20181202 22:01:01.100,1.27211,1.27656

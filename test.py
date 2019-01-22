@@ -5,15 +5,18 @@ sc = SparkContext()
 sqlContext = SQLContext(sc)
 
 
-# open high low close
-schema = StructType([
-    StructField("symbol", StringType(), True),
-    StructField("time", StringType(), True),
-    StructField("bid", DecimalType(precision=10, scale=5), True),
-    StructField("ask", DecimalType(precision=10, scale=5), True)]
-)
-# df = spark.read.csv('GBPUSD-2016-11-tick.csv', header='False', schema=schema)
-df = sqlContext.read.csv('GBPUSD-2016-11-tick.csv', header='False', schema=schema)
+def get_dataframe(filename='data/GBPUSD-2018-12-tick.csv'):
+    # open high low close
+    schema = StructType([
+        StructField("symbol", StringType(), True),
+        StructField("time", StringType(), True),
+        StructField("bid", DecimalType(precision=10, scale=5), True),
+        StructField("ask", DecimalType(precision=10, scale=5), True)]
+    )
+    # df = spark.read.csv('GBPUSD-2016-11-tick.csv', header='False', schema=schema)
+    df = sqlContext.read.csv(filename, header='False', schema=schema)
+    return df
+
 
 count=df.count()
 
