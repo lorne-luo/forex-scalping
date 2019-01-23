@@ -2,17 +2,8 @@ import csv
 import sys
 from datetime import datetime
 from decimal import Decimal
+from constants import *
 
-PERIOD_M1 = 1
-PERIOD_M5 = 5
-PERIOD_M15 = 15
-PERIOD_M30 = 30
-PERIOD_H1 = 60
-PERIOD_H4 = 240
-PERIOD_D1 = 1440
-PERIOD_W1 = 10080
-PERIOD_MN1 = 43200
-PERIOD_CHOICES = [PERIOD_M1, PERIOD_M5, PERIOD_M15, PERIOD_M30, PERIOD_H1, PERIOD_H4, PERIOD_D1, PERIOD_W1, PERIOD_MN1]
 
 candle_dict = {}
 
@@ -79,7 +70,7 @@ def tick_to_candle(symbol, src, timeframe):
             ask = Decimal(ask)
             process_tick(time, bid, ask, timeframe)
 
-    dest = '%s_%s.csv' % (symbol, PERIOD_M5)
+    dest = '%s_%s.csv' % (symbol, timeframe)
     write_to_csv(dest)
     print('Output: %s' % dest)
 
@@ -91,4 +82,4 @@ def tick_to_candle(symbol, src, timeframe):
 if __name__ == "__main__":
     tick_to_candle('GBPUSD',
                    'data/GBPUSD-2018-12-tick.csv',
-                   PERIOD_M15)
+                   PERIOD_M5)
