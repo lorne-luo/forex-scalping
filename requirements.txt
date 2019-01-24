@@ -11,3 +11,4 @@ nsepy
 beautifulsoup4
 scipy
 lxml
+plotly
