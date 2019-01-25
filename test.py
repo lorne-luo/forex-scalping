@@ -17,7 +17,7 @@ def get_dataframe(filename='data/GBPUSD-2018-12-tick.csv'):
     df = sqlContext.read.csv(filename, header='False', schema=schema)
     return df
 
-
+df=get_dataframe()
 count=df.count()
 
 print(count)
