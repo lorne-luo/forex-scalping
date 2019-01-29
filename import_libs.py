@@ -2,6 +2,7 @@ from IPython.display import display, HTML, Javascript, set_matplotlib_formats
 import numpy as np
 import scipy as sp
 import pandas as pd
+from pandas import DataFrame
 import matplotlib as mpl
 from matplotlib import pyplot as plt
 from matplotlib.pyplot import plot as plot
