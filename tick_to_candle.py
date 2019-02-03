@@ -70,7 +70,7 @@ def tick_to_candle(symbol, src, timeframe):
             ask = Decimal(ask)
             process_tick(time, bid, ask, timeframe)
 
-    dest = '%s_%s.csv' % (symbol, timeframe)
+    dest = 'data/%s_%s.csv' % (symbol, timeframe)
     write_to_csv(dest)
     print('Output: %s' % dest)
 
@@ -82,4 +82,4 @@ def tick_to_candle(symbol, src, timeframe):
 if __name__ == "__main__":
     tick_to_candle('GBPUSD',
                    'data/GBPUSD-2018-12-tick.csv',
-                   PERIOD_M5)
+                   PERIOD_H1)
