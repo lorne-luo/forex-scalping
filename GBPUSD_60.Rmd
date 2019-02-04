@@ -1,0 +1,94 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.0'
+      jupytext_version: 0.8.6
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
+```{python}
+from import_libs import *
+from math import fabs
+```
+
+```{python}
+df = pd.read_csv('data/GBPUSD_60.csv', header=0, index_col='time', parse_dates=True)
+```
+
+```{python}
+# calculate mean
+mean = (df['close'] + df['open']) / 2
+df['mean'] = mean
+df.head(3)
+```
+
+```{python}
+# calculate distance price between open and close
+distance = df['close'] - df['open']
+df['distance'] = distance
+df.head(3)
+```
+
+```{python}
+# calculate volatility point
+point = df['distance'] * 10000
+# point=point.apply(lambda x: fabs(x))
+df['point'] = point
+df.head(3)
+```
+
+```{python}
+# calculate abs volatility point
+point_series = df['point'].apply(lambda x: fabs(x))
+df['point_abs'] = point_series
+df.head(3)
+```
+
+```{python}
+# add column for hour
+time = pd.Series(df.index, index=df.index)
+hours = time.apply(lambda x: x.hour)
+df['hour'] = hours
+df.head(2)
+```
+
+```{python}
+# hourly describe() table
+index = []
+desc_data = []
+for i in range(24):
+    desc = df[(df.hour == i)].point_abs.describe()
+    desc_data.append((i,desc['mean'], desc['std'], desc['min'], desc['25%'], desc['50%'], desc['75%'], desc['max']))
+dd = pd.DataFrame(desc_data, columns=['hour','mean', 'std', 'min', '25%', '50%', '75%', 'max'])
+dd = dd.set_index('hour')
+
+dd.to_csv('data/GBPUSD_60_stat.csv', float_format='%.6f')
+dd.head(5)
+```
+
+```{python}
+df['point_abs'].describe()
+# format data and save to csv
+df['open'] = df['open'].map(lambda x: '%10.6f' % x)
+df['high'] = df['high'].map(lambda x: '%10.6f' % x)
+df['low'] = df['low'].map(lambda x: '%10.6f' % x)
+df['close'] = df['close'].map(lambda x: '%10.6f' % x)
+df['mean'] = df['mean'].map(lambda x: '%10.6f' % x)
+df['distance'] = df['distance'].map(lambda x: '%10.6f' % x)
+df['point'] = df['point'].map(lambda x: '%10.2f' % x)
+df['point_abs'] = df['point_abs'].map(lambda x: '%10.2f' % x)
+# df = df.round(5)
+df.to_csv('data/GBPUSD_60_clean.csv')
+df.head(5)
+
+```
+
+```{python}
+
+```

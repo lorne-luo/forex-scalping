@@ -1,0 +1,39 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.0'
+      jupytext_version: 0.8.6
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
+```{python}
+from __future__ import division
+from matplotlib.pyplot import plot
+from IPython.display import display
+
+from sympy.interactive import printing
+printing.init_printing(use_latex='mathjax')
+
+import sympy as sym
+from sympy import *
+x, y, z = symbols("x y z")
+k, m, n = symbols("k m n", integer=True)
+f, g, h = map(Function, 'fgh')
+
+from sympy import sympify,Rational
+Rational(3,2)*pi + exp(I*x) / (x**2 + y)
+```
+
+```{python}
+print(1+3)
+```
+
+```{python}
+
+```

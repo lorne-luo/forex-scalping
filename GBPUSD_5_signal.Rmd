@@ -1,0 +1,27 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.0'
+      jupytext_version: 0.8.6
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
+```{python}
+from import_libs import *
+from math import fabs
+```
+
+```{python}
+df = pd.read_csv('data/GBPUSD_5_clean.csv', header=0, index_col='time', parse_dates=True)
+df.head(5)
+```
+
+```{python}
+
+```

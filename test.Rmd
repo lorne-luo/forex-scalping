@@ -1,0 +1,56 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.0'
+      jupytext_version: 0.8.6
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
+```{python}
+import nsepy as nse 
+import numpy as np
+import pandas as pd 
+import matplotlib.pyplot as plt
+import seaborn as sns 
+from datetime import date
+```
+
+```{python}
+df_train = nse.get_history(symbol="YESBANK",start=date(2018,8,8),end = date(2018,12,29))
+df_test = nse.get_history(symbol="YESBANK",start=date(2018,5,5),end=date(2018,6,6))
+```
+
+```{python}
+df_train
+```
+
+```{python}
+df_test.describe()
+```
+
+```{python}
+sns.scatterplot(x='Volume',y='Turnover',data = df_train)
+```
+
+```{python}
+corr = df_train.corr()
+f, ax = plt.subplots(figsize=(11, 9))
+cmap = sns.diverging_palette(220, 10, as_cmap=True)
+corr_matrix = sns.heatmap(corr, cmap=cmap, vmax=.3, center=0,
+            square=True, linewidths=.5, cbar_kws={"shrink": .5})
+corr_matrix_fig = corr_matrix.get_figure()
+```
+
+```{python}
+# %matplotlib inline
+```
+
+```{python}
+
+```
