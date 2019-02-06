@@ -4,6 +4,7 @@ import scipy as sp
 import pandas as pd
 from pandas import DataFrame
 import matplotlib as mpl
+import talib as ta
 from matplotlib import pyplot as plt
 from matplotlib.pyplot import plot as plot
 from numpy import inf, arange, array, linspace, exp, log, power, pi, cos, sin, radians, degrees
