@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import matplotlib.ticker as mticker
 from mpl_finance import candlestick_ohlc
-from constants import *
+from lib.constants import *
 
 
 def bytespdate2num(fmt, encoding='utf-8'):
