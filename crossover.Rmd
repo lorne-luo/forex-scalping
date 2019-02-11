@@ -1,0 +1,47 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.0'
+      jupytext_version: 0.8.6
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
+```{python}
+from import_libs import *
+
+```
+
+```{python}
+df = pd.read_csv('data/GBPUSD_5_clean.csv', header=0, index_col='time', parse_dates=True)
+
+```
+
+```{python}
+df['sma5'] = df['close'].rolling(window=5,min_periods=1, center=False).mean()
+df['sma13'] = df['close'].rolling(window=13,min_periods=1, center=False).mean()
+df['signal'] = np.nan
+df.head(15)
+
+```
+
+```{python}
+df['signal']=df['sma5'][5:]>df['sma13'][5:]
+df['signal']=df['signal'].diff()
+df.head(25)
+```
+
+```{python}
+data=df[:100]
+data.loc[data.signal == -1.0].index
+
+```
+
+```{python}
+
+```
