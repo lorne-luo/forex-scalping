@@ -40,6 +40,19 @@ df.head(25)
 data=df[:100]
 data.loc[data.signal == -1.0].index
 
+fig = plt.figure()
+ax1 = fig.add_subplot(111,  ylabel='Price in $')
+data['close'].plot(ax=ax1, color='r', lw=2.)
+
+# data[['sma5', 'sma13']].plot(ax=ax1, lw=2.)
+# ax1.plot(data.loc[data.signal == 1.0].index, 
+#          data.sma5[data.signal == 1.0],
+#          '^', markersize=10, color='m')
+
+# ax1.plot(data.loc[data.signal == -1.0].index, 
+#          data.sma5[data.signal == -1.0],
+#          'v', markersize=10, color='k')
+plt.show()
 ```
 
 ```{python}
