@@ -2,13 +2,11 @@ import csv
 import sys
 from datetime import datetime
 from decimal import Decimal
-
+import pandas as pd
 from lib.candle import get_candle_time
 from lib.constants import *
 
-
 candle_dict = {}
-
 
 
 def process_tick(time, bid, ask, timeframe):
@@ -44,20 +42,41 @@ def write_to_csv(dest):
             handle.write(line)
 
 
+def get_pandas_timeframe(timeframe):
+    if timeframe == PERIOD_M1:
+        return '60s'
+    if timeframe == PERIOD_M5:
+        return '300s'
+    if timeframe == PERIOD_M15:
+        return '900s'
+    if timeframe == PERIOD_M30:
+        return '1800s'
+    if timeframe == PERIOD_H1:
+        return '1h'
+    if timeframe == PERIOD_H4:
+        return '4h'
+    if timeframe == PERIOD_H4:
+        return '4h'
+    if timeframe == PERIOD_D1:
+        return '1d'
+    raise NotImplementedError
+
+
 def tick_to_candle(symbol, src, timeframe):
     if timeframe not in PERIOD_CHOICES:
         raise Exception('period not correct')
 
-    with open(src) as src_file:
-        reader = csv.reader(src_file)
-        for _, time, bid, ask in reader:
-            time = datetime.strptime(time, '%Y%m%d %H:%M:%S.%f')
-            bid = Decimal(bid)
-            ask = Decimal(ask)
-            process_tick(time, bid, ask, timeframe)
+    dateparse = lambda x: pd.datetime.strptime(x, '%Y%m%d %H:%M:%S.%f')
+    df = pd.read_csv(src, names=['symbol', 'time', 'bid', 'ask'], parse_dates=['time'],
+                     date_parser=dateparse, index_col='time')
+
+
+    pandas_timeframe = get_pandas_timeframe(timeframe)
+    ohlc = df.bid.resample(pandas_timeframe, how="ohlc", closed="right", label="right",
+                           loffset="-%s" % pandas_timeframe)
 
     dest = 'data/%s_%s.csv' % (symbol, timeframe)
-    write_to_csv(dest)
+    ohlc.to_csv(dest, float_format='%.6f')
     print('Output: %s' % dest)
 
 
