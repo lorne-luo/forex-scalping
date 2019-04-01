@@ -15,3 +15,5 @@ plotly
 pandas-datareader
 quandl
 statsmodels
+git+git://github.com/albertbup/deep-belief-network.git
+mnist
